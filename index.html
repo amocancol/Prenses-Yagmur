@@ -2,7 +2,8 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Seni Çok Seviyorum</title>
+<title>Prenses Yağmur 💖</title>
+
 <style>
   body {
     margin: 0;
@@ -21,71 +22,97 @@
     text-align: center;
     z-index: 10;
     animation: fadeIn 3s ease;
+    text-shadow: 0 0 20px rgba(255,0,60,0.5);
   }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.8); }
-    to { opacity: 1; transform: scale(1); }
+    from { opacity: 0; transform: scale(0.85); }
+    to   { opacity: 1; transform: scale(1); }
   }
 
-  .flower {
+  /* Kokina layer */
+  #kokina-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  /* Kokina tanesi */
+  .kokina {
     position: absolute;
-    width: 20px;
-    height: 20px;
-    background: crimson;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
-    animation: bloom 6s infinite ease-in-out;
-    opacity: 0;
+    background: radial-gradient(circle at 30% 30%, #ff9aa8, #c60018 55%, #7a0010 100%);
+    box-shadow: 0 0 14px rgba(255, 0, 60, 0.35);
+    animation:
+      fall var(--dur) linear forwards,
+      sway var(--sway) ease-in-out infinite;
   }
 
-  .flower::before,
-  .flower::after {
-    content: '';
+  /* Yeşil yaprak */
+  .kokina::after {
+    content: "";
     position: absolute;
-    width: 20px;
-    height: 20px;
-    background: crimson;
-    border-radius: 50%;
+    width: 12px;
+    height: 8px;
+    left: -6px;
+    top: -7px;
+    background: radial-gradient(circle at 30% 30%, #b6ffb6, #0e7a35 70%, #065023);
+    border-radius: 12px 12px 12px 2px;
+    transform: rotate(-20deg);
   }
 
-  .flower::before {
-    top: -12px;
-    left: 0;
+  @keyframes fall {
+    from { transform: translateY(-40px) scale(var(--s)); opacity: 0; }
+    10%  { opacity: 1; }
+    to   { transform: translateY(calc(100vh + 60px)) scale(var(--s)); opacity: 0.9; }
   }
 
-  .flower::after {
-    left: 12px;
-    top: 0;
-  }
-
-  @keyframes bloom {
-    0% { transform: scale(0); opacity: 0; }
-    30% { opacity: 1; }
-    100% { transform: scale(2); opacity: 0; }
+  @keyframes sway {
+    0%,100% { margin-left: 0px; }
+    50%     { margin-left: var(--x); }
   }
 </style>
 </head>
+
 <body>
 
-<h1>Prenses Yağmur 💖<br>Seni çok seviyorum bebeğim 🌹</h1>
+<h1>
+  Prenses Yağmur 💖<br>
+  Seni çok seviyorum bebeğim 🌹
+</h1>
+
+<div id="kokina-layer"></div>
 
 <script>
-  function createFlower() {
-    const flower = document.createElement('div');
-    flower.classList.add('flower');
+  const layer = document.getElementById("kokina-layer");
 
-    flower.style.left = Math.random() * window.innerWidth + 'px';
-    flower.style.top = Math.random() * window.innerHeight + 'px';
-    flower.style.animationDuration = (4 + Math.random() * 4) + 's';
+  function spawnKokina() {
+    const b = document.createElement("div");
+    b.className = "kokina";
 
-    document.body.appendChild(flower);
+    const startX = Math.random() * window.innerWidth;
+    const scale  = (0.6 + Math.random() * 1.1).toFixed(2);
+    const dur    = (6 + Math.random() * 7).toFixed(2) + "s";
+    const sway   = (1.5 + Math.random() * 2.5).toFixed(2) + "s";
+    const x      = ((Math.random() * 80) - 40).toFixed(0) + "px";
 
-    setTimeout(() => {
-      flower.remove();
-    }, 8000);
+    b.style.left = startX + "px";
+    b.style.top  = "-30px";
+    b.style.setProperty("--s", scale);
+    b.style.setProperty("--dur", dur);
+    b.style.setProperty("--sway", sway);
+    b.style.setProperty("--x", x);
+
+    layer.appendChild(b);
+
+    setTimeout(() => b.remove(), (parseFloat(dur) * 1000) + 500);
   }
 
-  setInterval(createFlower, 500);
+  // Kokina yoğunluğu (küçültmek için 300–400 yap)
+  setInterval(spawnKokina, 220);
 </script>
 
 </body>
