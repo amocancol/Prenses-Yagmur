@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Seni Çok Seviyorum</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    background: radial-gradient(circle at top, #2b0000, #000);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  h1 {
+    color: #fff;
+    font-size: 3rem;
+    text-align: center;
+    z-index: 10;
+    animation: fadeIn 3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .flower {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: crimson;
+    border-radius: 50%;
+    animation: bloom 6s infinite ease-in-out;
+    opacity: 0;
+  }
+
+  .flower::before,
+  .flower::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: crimson;
+    border-radius: 50%;
+  }
+
+  .flower::before {
+    top: -12px;
+    left: 0;
+  }
+
+  .flower::after {
+    left: 12px;
+    top: 0;
+  }
+
+  @keyframes bloom {
+    0% { transform: scale(0); opacity: 0; }
+    30% { opacity: 1; }
+    100% { transform: scale(2); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Prenses Yağmur 💖<br>Seni çok seviyorum bebeğim 🌹</h1>
+
+<script>
+  function createFlower() {
+    const flower = document.createElement('div');
+    flower.classList.add('flower');
+
+    flower.style.left = Math.random() * window.innerWidth + 'px';
+    flower.style.top = Math.random() * window.innerHeight + 'px';
+    flower.style.animationDuration = (4 + Math.random() * 4) + 's';
+
+    document.body.appendChild(flower);
+
+    setTimeout(() => {
+      flower.remove();
+    }, 8000);
+  }
+
+  setInterval(createFlower, 500);
+</script>
+
+</body>
+</html>
