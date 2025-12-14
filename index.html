@@ -21,6 +21,7 @@
     text-align: center;
     z-index: 10;
     padding: 20px;
+    max-width: 90%;
   }
 
   h1 {
@@ -31,16 +32,17 @@
   }
 
   .counter {
-    font-size: 1.2rem;
-    margin-bottom: 25px;
-    opacity: 0.9;
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+    opacity: 0.95;
   }
 
   button {
+    margin-top: 20px;
     background: linear-gradient(45deg, #c60018, #ff4d6d);
     border: none;
     border-radius: 30px;
-    padding: 14px 30px;
+    padding: 14px 32px;
     font-size: 1.1rem;
     color: #fff;
     cursor: pointer;
@@ -54,7 +56,7 @@
   }
 
   .message {
-    margin-top: 20px;
+    margin-top: 18px;
     font-size: 1.4rem;
     min-height: 40px;
     animation: fadeIn 0.6s ease;
@@ -115,7 +117,8 @@
 <div class="content">
   <h1>Prenses Yağmur 💖</h1>
 
-  <div class="counter" id="counter"></div>
+  <div class="counter" id="meetCounter"></div>
+  <div class="counter" id="loveCounter"></div>
 
   <button onclick="nextMessage()">Bana tıkla 💖</button>
 
@@ -125,65 +128,64 @@
 <div id="kokina-layer"></div>
 
 <script>
-  /* 4️⃣ Birlikte geçen süre */
-  // ⚠️ BURAYI DEĞİŞTİR
-  const startDate = new Date("2024-05-06"); // tanışma / sevgili olduğunuz tarih
+  /* 📅 TARİHLER */
+  const meetDate = new Date("2023-12-22");
+  const loveDate = new Date("2024-05-06");
 
-  function updateCounter() {
+  function calculateTime(startDate) {
     const now = new Date();
-    let diff = now - startDate;
-
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const years = Math.floor(days / 365);
-    const months = Math.floor((days % 365) / 30);
-    const remainingDays = days - (years * 365) - (months * 30);
-
-    document.getElementById("counter").innerText =
-      `💞 ${years} yıl ${months} ay ${remainingDays} gündür birlikteyiz`;
+    const diffDays = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+    const years = Math.floor(diffDays / 365);
+    const months = Math.floor((diffDays % 365) / 30);
+    const days = diffDays - (years * 365) - (months * 30);
+    return { years, months, days };
   }
 
-  updateCounter();
-  setInterval(updateCounter, 60000);
+  function updateCounters() {
+    const meet = calculateTime(meetDate);
+    const love = calculateTime(loveDate);
 
-  /* 3️⃣ Mesaj değiştiren buton */
+    document.getElementById("meetCounter").innerText =
+      `💫 ${meet.years} yıl ${meet.months} ay ${meet.days} gündür tanışıyoruz`;
+
+    document.getElementById("loveCounter").innerText =
+      `💞 ${love.years} yıl ${love.months} ay ${love.days} gündür sevgiliyiz`;
+  }
+
+  updateCounters();
+  setInterval(updateCounters, 60000);
+
+  /* 💖 Mesaj değiştiren buton */
   const messages = [
     "Seni çok seviyorum 💖",
-    "Gülüşün dünyam 🌸",
-    "İyi ki benim sevgilimsin 🥰",
+    "İyi ki hayatıma girdin 🌸",
+    "Gülüşün dünyam 🥰",
     "Kalbimin en güzel yeri sensin 💘",
     "Bir ömür sen ♾️"
   ];
 
   let index = 0;
-
   function nextMessage() {
-    const msg = document.getElementById("message");
-    msg.innerText = messages[index];
+    document.getElementById("message").innerText = messages[index];
     index = (index + 1) % messages.length;
   }
 
-  /* Kokina animasyonu */
+  /* 🌹 Kokina animasyonu */
   const layer = document.getElementById("kokina-layer");
 
   function spawnKokina() {
     const b = document.createElement("div");
     b.className = "kokina";
 
-    const startX = Math.random() * window.innerWidth;
-    const scale  = (0.6 + Math.random() * 1.1).toFixed(2);
-    const dur    = (6 + Math.random() * 7).toFixed(2) + "s";
-    const sway   = (1.5 + Math.random() * 2.5).toFixed(2) + "s";
-    const x      = ((Math.random() * 80) - 40).toFixed(0) + "px";
-
-    b.style.left = startX + "px";
+    b.style.left = Math.random() * window.innerWidth + "px";
     b.style.top  = "-30px";
-    b.style.setProperty("--s", scale);
-    b.style.setProperty("--dur", dur);
-    b.style.setProperty("--sway", sway);
-    b.style.setProperty("--x", x);
+    b.style.setProperty("--s", (0.6 + Math.random()).toFixed(2));
+    b.style.setProperty("--dur", (6 + Math.random() * 6) + "s");
+    b.style.setProperty("--sway", (1.5 + Math.random() * 2.5) + "s");
+    b.style.setProperty("--x", ((Math.random() * 80) - 40) + "px");
 
     layer.appendChild(b);
-    setTimeout(() => b.remove(), (parseFloat(dur) * 1000) + 500);
+    setTimeout(() => b.remove(), 14000);
   }
 
   setInterval(spawnKokina, 220);
