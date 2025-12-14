@@ -5,111 +5,168 @@
 <title>Prenses Yağmur 💖</title>
 
 <style>
-  body {
-    margin: 0;
-    height: 100vh;
-    overflow: hidden;
-    background: radial-gradient(circle at top, #2b0000, #000);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Segoe UI', sans-serif;
-    color: #fff;
-  }
+body{
+  margin:0;
+  height:100vh;
+  overflow:hidden;
+  background:radial-gradient(circle at top,#2b0000,#000);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:'Segoe UI',sans-serif;
+  color:#fff;
+}
 
-  .content {
-    text-align: center;
-    z-index: 10;
-    padding: 20px;
-    max-width: 95%;
-  }
+.content{
+  text-align:center;
+  z-index:10;
+  padding:20px;
+  max-width:95%;
+}
 
-  h1 {
-    font-size: 2.6rem;
-    margin-bottom: 10px;
-    text-shadow: 0 0 20px rgba(255,0,60,0.5);
-  }
+h1{
+  font-size:2.6rem;
+  text-shadow:0 0 20px rgba(255,0,60,.6);
+}
 
-  .counter {
-    font-size: 1.1rem;
-    margin-bottom: 6px;
-    opacity: 0.9;
-  }
+.counter{
+  font-size:1.1rem;
+  opacity:.9;
+  margin-bottom:5px;
+}
 
-  /* OYUN */
-  .question {
-    font-size: 1.8rem;
-    margin: 25px 0 15px;
-  }
+/* OYUN */
+.question{
+  font-size:1.8rem;
+  margin:25px 0 10px;
+}
 
-  .buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 15px;
-  }
+.buttons{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  margin-top:15px;
+}
 
-  .btn {
-    border: none;
-    border-radius: 40px;
-    padding: 14px 30px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
+.btn{
+  border:none;
+  border-radius:40px;
+  padding:14px 30px;
+  font-size:1.2rem;
+  cursor:pointer;
+  transition:.3s;
+}
 
-  .yes {
-    background: linear-gradient(45deg, #ff4d6d, #c60018);
-    color: #fff;
-    box-shadow: 0 0 15px rgba(255,0,60,0.6);
-  }
+.yes{
+  background:linear-gradient(45deg,#ff4d6d,#c60018);
+  color:#fff;
+  box-shadow:0 0 15px rgba(255,0,60,.6);
+}
 
-  .no {
-    background: #444;
-    color: #fff;
-  }
+.no{
+  background:#444;
+  color:#fff;
+}
 
-  .hint {
-    margin-top: 15px;
-    font-size: 1.2rem;
-    opacity: 0.9;
-  }
+.hint{
+  margin-top:15px;
+  font-size:1.2rem;
+  min-height:30px;
+}
 
-  /* Tam ekran evet */
-  .fullscreen {
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(circle at center, #ff4d6d, #7a0010);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2.2rem;
-    text-align: center;
-    z-index: 50;
-    cursor: pointer;
-  }
+/* ANILAR & VIDEO YAZISI */
+.memory-text{
+  margin-top:30px;
+  font-size:1.3rem;
+  cursor:pointer;
+  color:#ffd1dc;
+  text-decoration:underline;
+}
 
-  /* Kokina */
-  #kokina-layer {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 5;
-  }
+.memory-text:hover{
+  color:#ff4d6d;
+}
 
-  .kokina {
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #ff9aa8, #c60018 55%, #7a0010);
-    animation: fall 8s linear forwards;
-  }
+/* FOTO MODAL */
+#memoryModal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.88);
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:100;
+  text-align:center;
+  padding:20px;
+}
 
-  @keyframes fall {
-    from { transform: translateY(-40px); opacity: 0; }
-    to   { transform: translateY(110vh); opacity: 1; }
-  }
+#memoryModal img{
+  max-width:90%;
+  max-height:60%;
+  border-radius:20px;
+  box-shadow:0 0 30px rgba(255,0,80,.6);
+}
+
+#memoryCaption{
+  margin-top:15px;
+  font-size:1.4rem;
+}
+
+/* VIDEO MODAL */
+#videoModal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.9);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:150;
+  padding:20px;
+}
+
+#videoModal video{
+  max-width:90%;
+  max-height:80%;
+  border-radius:20px;
+  box-shadow:0 0 30px rgba(255,0,80,.6);
+}
+
+/* FULLSCREEN EVET */
+.fullscreen{
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle,#ff4d6d,#7a0010);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:2.2rem;
+  text-align:center;
+  z-index:200;
+  cursor:pointer;
+}
+
+/* KOKINA */
+#kokina-layer{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:5;
+}
+
+.kokina{
+  position:absolute;
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#ff9aa8,#c60018 55%,#7a0010);
+  animation:fall 8s linear forwards;
+}
+
+@keyframes fall{
+  from{transform:translateY(-40px);opacity:0;}
+  to{transform:translateY(110vh);opacity:1;}
+}
 </style>
 </head>
 
@@ -129,78 +186,106 @@
   </div>
 
   <div class="hint" id="hint"></div>
+
+  <div class="memory-text" onclick="showMemory()">
+    Bir anı görmek ister misin? 💭
+  </div>
+
+  <div class="memory-text" onclick="showVideo()">
+    Bir videomuzu izlemek ister misin? 🎬💖
+  </div>
+</div>
+
+<!-- FOTO MODAL -->
+<div id="memoryModal">
+  <img id="memoryImg">
+  <div id="memoryCaption"></div>
+</div>
+
+<!-- VIDEO MODAL -->
+<div id="videoModal">
+  <video id="loveVideo" controls>
+    <source src="VID_20251213_081534_509_bsl_V1.mp4" type="video/mp4">
+  </video>
 </div>
 
 <div id="kokina-layer"></div>
 
 <script>
-  /* TARİHLER */
-  const meetDate = new Date("2023-12-22");
-  const loveDate = new Date("2024-05-06");
+/* TARİHLER */
+const meetDate=new Date("2023-12-22");
+const loveDate=new Date("2024-05-06");
 
-  function calc(start) {
-    const d = Math.floor((new Date() - start) / (1000*60*60*24));
-    return {
-      y: Math.floor(d/365),
-      m: Math.floor((d%365)/30),
-      d: d % 30
-    };
+function calc(start){
+  const d=Math.floor((new Date()-start)/(1000*60*60*24));
+  return{y:Math.floor(d/365),m:Math.floor((d%365)/30),d:d%30};
+}
+
+function updateCounters(){
+  const m=calc(meetDate),l=calc(loveDate);
+  meetCounter.innerText=`💫 ${m.y} yıl ${m.m} ay ${m.d} gündür tanışıyoruz`;
+  loveCounter.innerText=`💞 ${l.y} yıl ${l.m} ay ${l.d} gündür sevgiliyiz`;
+}
+updateCounters();
+
+/* OYUN */
+let noCount=0;
+const hints=["Emin misin? 😏","Bir daha düşün 😌","Kalbin evet diyor 💖","Hayır küçülüyor 😅","Kaçış yok 😎"];
+
+function noClick(){
+  noCount++;
+  yesBtn.style.transform=`scale(${1+noCount*.25})`;
+  noBtn.style.transform=`scale(${1-noCount*.15})`;
+  hint.innerText=hints[Math.min(noCount-1,hints.length-1)];
+  if(noCount>=5){
+    noBtn.style.display="none";
+    yesBtn.style.transform="scale(4)";
   }
+}
 
-  function updateCounters() {
-    const m = calc(meetDate);
-    const l = calc(loveDate);
-    meetCounter.innerText = `💫 ${m.y} yıl ${m.m} ay ${m.d} gündür tanışıyoruz`;
-    loveCounter.innerText = `💞 ${l.y} yıl ${l.m} ay ${l.d} gündür sevgiliyiz`;
-  }
+function yesClick(){
+  const fs=document.createElement("div");
+  fs.className="fullscreen";
+  fs.innerText="Beni sevdiğini zaten biliyordum 💖😌";
+  document.body.appendChild(fs);
+}
 
-  updateCounters();
+/* ANILAR */
+const memories=[
+  {src:"ani1.jpg",text:"Bu fotoğrafta sana bir kez daha aşık oldum 💖"},
+  {src:"ani2.jpg",text:"En mutlu anılarımdan biri 🌸"},
+  {src:"ani3.jpg",text:"Her gülüşünde kalbim eriyor 💘"}
+];
+let memIndex=0;
 
-  /* OYUN */
-  let noCount = 0;
-  const hints = [
-    "Emin misin? 😏",
-    "Bak bir daha düşün 😌",
-    "Kalbin evet diyor 💖",
-    "Hayır butonu yoruldu 😅",
-    "Artık kaçış yok 😎"
-  ];
+function showMemory(){
+  memoryImg.src=memories[memIndex].src;
+  memoryCaption.innerText=memories[memIndex].text;
+  memoryModal.style.display="flex";
+  memIndex=(memIndex+1)%memories.length;
+}
+memoryModal.addEventListener("click",()=>memoryModal.style.display="none");
 
-  function noClick() {
-    noCount++;
+/* VIDEO */
+function showVideo(){
+  videoModal.style.display="flex";
+  loveVideo.play();
+}
+videoModal.addEventListener("click",()=>{
+  loveVideo.pause();
+  loveVideo.currentTime=0;
+  videoModal.style.display="none";
+});
 
-    const yes = document.getElementById("yesBtn");
-    const no  = document.getElementById("noBtn");
-
-    yes.style.transform = `scale(${1 + noCount * 0.25})`;
-    no.style.transform  = `scale(${1 - noCount * 0.15})`;
-
-    document.getElementById("hint").innerText =
-      hints[Math.min(noCount-1, hints.length-1)];
-
-    if (noCount >= 5) {
-      no.style.display = "none";
-      yes.style.transform = "scale(4)";
-    }
-  }
-
-  function yesClick() {
-    const screen = document.createElement("div");
-    screen.className = "fullscreen";
-    screen.innerHTML = "Beni sevdiğini zaten biliyordum 💖😌";
-    document.body.appendChild(screen);
-  }
-
-  /* Kokina */
-  function spawnKokina() {
-    const k = document.createElement("div");
-    k.className = "kokina";
-    k.style.left = Math.random()*window.innerWidth + "px";
-    document.getElementById("kokina-layer").appendChild(k);
-    setTimeout(()=>k.remove(),8000);
-  }
-
-  setInterval(spawnKokina, 300);
+/* KOKINA */
+function spawnKokina(){
+  const k=document.createElement("div");
+  k.className="kokina";
+  k.style.left=Math.random()*window.innerWidth+"px";
+  document.getElementById("kokina-layer").appendChild(k);
+  setTimeout(()=>k.remove(),8000);
+}
+setInterval(spawnKokina,300);
 </script>
 
 </body>
