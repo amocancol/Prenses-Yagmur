@@ -194,7 +194,7 @@ h1{
     Bir videomuzu izlemek ister misin? 🎬💖
   </div>
 
-  <div class="memory-text" onclick="playSong()">
+  <div class="memory-text" id="songText" onclick="toggleSong()">
     Bizim şarkıyı duymak ister misin? 🎵💖
   </div>
 </div>
@@ -285,13 +285,18 @@ videoModal.addEventListener("click",()=>{
   videoModal.style.display="none";
 });
 
-/* ŞARKI – SADECE KISA BÖLÜM */
-let songPlayed=false;
-function playSong(){
-  if(songPlayed) return;
-  loveSong.currentTime=0;
-  loveSong.play();
-  songPlayed=true;
+/* 🎵 ŞARKI – BAŞLAT / DURDUR */
+const song = document.getElementById("loveSong");
+const songText = document.getElementById("songText");
+
+function toggleSong(){
+  if(song.paused){
+    song.play();
+    songText.innerText="Şarkıyı durdur ⏸️";
+  }else{
+    song.pause();
+    songText.innerText="Devam et ▶️";
+  }
 }
 
 /* KOKINA */
