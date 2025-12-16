@@ -178,6 +178,22 @@ h1{
   font-size:14px;
   opacity:0;
 }
+  /* 💥 PATLAMA PARÇALARI */
+.piece{
+  position:absolute;
+  width:40px;
+  height:40px;
+  background-size:200px 200px;
+  border-radius:50%;
+  animation:explode .9s ease-out forwards;
+}
+
+@keyframes explode{
+  to{
+    transform:translate(var(--x), var(--y)) rotate(720deg);
+    opacity:0;
+  }
+}
 </style>
 </head>
 
@@ -333,6 +349,10 @@ closeGame.onclick=()=>gameOverlay.style.display="none";
 
 faceWrap.addEventListener("click",e=>{
   hits++;
+  if(hits === 200){
+  explodeFace();
+  return; // oyun bitsin
+  }
   hitsEl.innerText=hits;
 
   const r=faceWrap.getBoundingClientRect();
@@ -363,6 +383,39 @@ faceWrap.addEventListener("click",e=>{
   punchSound.currentTime=0;
   punchSound.play().catch(()=>{});
 });
+  function explodeFace(){
+  const rect = faceWrap.getBoundingClientRect();
+  const imgSrc = "20251216_213013.jpg"; // FOTO ADI AYNI
+
+  faceWrap.innerHTML = ""; // yüzü temizle
+
+  for(let y=0;y<5;y++){
+    for(let x=0;x<5;x++){
+      const p = document.createElement("div");
+      p.className = "piece";
+      p.style.left = (x*40) + "px";
+      p.style.top  = (y*40) + "px";
+      p.style.backgroundImage = `url(${imgSrc})`;
+      p.style.backgroundPosition = `-${x*40}px -${y*40}px`;
+
+      const dx = (Math.random()*400 - 200) + "px";
+      const dy = (Math.random()*400 - 200) + "px";
+      p.style.setProperty("--x", dx);
+      p.style.setProperty("--y", dy);
+
+      faceWrap.appendChild(p);
+    }
+  }
+
+  // 🎉 Yazı
+  setTimeout(()=>{
+    const msg=document.createElement("div");
+    msg.style.marginTop="15px";
+    msg.style.fontSize="1.4rem";
+    msg.innerText="TAMAM YETER 😂💥";
+    faceWrap.appendChild(msg);
+  },300);
+  }
 </script>
 
 </body>
