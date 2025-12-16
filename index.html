@@ -30,9 +30,9 @@ h1{
   text-shadow:0 0 20px rgba(255,0,60,.6);
 }
 
-.counter{ font-size:1.1rem; opacity:.9; }
+.counter{ font-size:1.05rem; opacity:.9; }
 
-.question{ font-size:1.8rem; margin:25px 0 10px; }
+.question{ font-size:1.8rem; margin:20px 0 10px; }
 
 .buttons{
   display:flex;
@@ -44,8 +44,8 @@ h1{
 .btn{
   border:none;
   border-radius:40px;
-  padding:14px 30px;
-  font-size:1.2rem;
+  padding:14px 28px;
+  font-size:1.15rem;
   cursor:pointer;
   transition:.3s;
 }
@@ -56,8 +56,8 @@ h1{
 .hint{ margin-top:15px; min-height:30px; }
 
 .memory-text{
-  margin-top:20px;
-  font-size:1.25rem;
+  margin-top:18px;
+  font-size:1.2rem;
   cursor:pointer;
   color:#ffd1dc;
   text-decoration:underline;
@@ -76,49 +76,42 @@ h1{
   to{transform:translateY(110vh);opacity:1;}
 }
 
-/* 📷 Foto modal */
-#memoryModal{
-  position:fixed; inset:0;
+/* MODALS */
+.modal{
+  position:fixed;
+  inset:0;
   background:rgba(0,0,0,.88);
   display:none;
-  flex-direction:column;
   justify-content:center;
   align-items:center;
+  flex-direction:column;
   z-index:120;
 }
-#memoryModal img{
-  max-width:92%; max-height:60%;
+.modal img, .modal video{
+  max-width:92%;
+  max-height:70%;
   border-radius:20px;
 }
-#memoryCaption{ margin-top:15px; font-size:1.3rem; }
+.caption{ margin-top:15px; font-size:1.25rem; }
 
-/* 🎬 Video */
-#videoModal{
-  position:fixed; inset:0;
-  background:rgba(0,0,0,.9);
-  display:none;
+/* FULLSCREEN */
+.fullscreen{
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle,#ff4d6d,#7a0010);
+  display:flex;
   justify-content:center;
   align-items:center;
-  z-index:140;
-}
-#videoModal video{
-  max-width:92%; max-height:80%;
-  border-radius:20px;
-}
-
-/* ❤️ Fullscreen */
-.fullscreen{
-  position:fixed; inset:0;
-  background:radial-gradient(circle,#ff4d6d,#7a0010);
-  display:flex; justify-content:center; align-items:center;
-  font-size:2.2rem; text-align:center;
+  font-size:2.2rem;
+  text-align:center;
   z-index:200;
 }
 
-/* 🎮 Mini oyun */
+/* 🎮 GAME */
 #gameOverlay{
-  position:fixed; inset:0;
-  background:rgba(0,0,0,.85);
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.9);
   display:none;
   justify-content:center;
   align-items:center;
@@ -136,21 +129,19 @@ h1{
 .close{
   position:absolute;
   top:10px; right:12px;
-  cursor:pointer; font-size:22px;
+  cursor:pointer;
 }
 
 .faceWrap{
   position:relative;
   width:230px; height:230px;
   margin:10px auto;
-  cursor:pointer;
 }
 
-#faceImg{
+.faceWrap img{
   width:100%; height:100%;
   border-radius:50%;
   object-fit:cover;
-  transition:transform .08s;
 }
 
 .bruise{ position:absolute; inset:0; border-radius:50%; opacity:0; }
@@ -158,7 +149,15 @@ h1{
 .b2{background:radial-gradient(circle at 65% 40%, rgba(0,140,255,.3), transparent 60%);}
 .b3{background:radial-gradient(circle at 50% 50%, rgba(255,0,120,.28), transparent 60%);}
 
-.pow{
+#glove{
+  position:absolute;
+  width:80px;
+  pointer-events:none;
+  opacity:0;
+  z-index:10;
+}
+
+#pow{
   position:absolute;
   top:50%; left:50%;
   transform:translate(-50%,-50%) scale(0);
@@ -167,23 +166,13 @@ h1{
   font-weight:bold;
 }
 
-/* 🥊 Eldiven */
-#glove{
-  position:absolute;
-  width:80px;
-  pointer-events:none;
-  opacity:0;
-  transform:scale(.5);
-  transition:.18s;
-}
-
-/* 💬 Baloncuk */
-.bubble{
+#bubble{
   position:absolute;
   top:-20px; left:50%;
   transform:translateX(-50%) scale(0);
-  background:#fff; color:#000;
-  padding:8px 12px;
+  background:#fff;
+  color:#000;
+  padding:6px 10px;
   border-radius:14px;
   font-size:14px;
   opacity:0;
@@ -195,6 +184,7 @@ h1{
 
 <div class="content">
   <h1>Prenses Yağmur 💖</h1>
+
   <div class="counter" id="meetCounter"></div>
   <div class="counter" id="loveCounter"></div>
 
@@ -209,18 +199,17 @@ h1{
 
   <div class="memory-text" id="memoryText">Bir anı görmek ister misin? 💭</div>
   <div class="memory-text" id="videoText">Bir videomuzu izlemek ister misin? 🎬💖</div>
-  <div class="memory-text" id="songText">Bizim şarkıyı duymak ister misin? 🎵💖</div>
+  <div class="memory-text" id="songText">Bizim şarkıyı dinlemek ister misin? 🎵💖</div>
   <div class="memory-text" id="gameText">Mini Oyun 🎮</div>
 </div>
 
-<!-- Foto -->
-<div id="memoryModal">
+<!-- MODALS -->
+<div class="modal" id="memoryModal">
   <img id="memoryImg">
-  <div id="memoryCaption"></div>
+  <div class="caption" id="memoryCaption"></div>
 </div>
 
-<!-- Video -->
-<div id="videoModal">
+<div class="modal" id="videoModal">
   <video id="loveVideo" controls>
     <source src="VID_20251213_081534_509_bsl_V1.mp4" type="video/mp4">
   </video>
@@ -230,19 +219,19 @@ h1{
   <source src="Çünkü sen, çölüme yağmur oldun. [pyLs2WFVh7Q] (mp3cut.net).mp3" type="audio/mpeg">
 </audio>
 
-<!-- 🎮 OYUN -->
+<!-- GAME -->
 <div id="gameOverlay">
   <div class="gameBox">
     <div class="close" id="closeGame">✖</div>
     <h3>Hadi vur 😄</h3>
 
     <div class="faceWrap" id="faceWrap">
-      <img src="20251216_213013.jpg" id="faceImg">
+      <img src="20251216_213013.jpg">
       <div class="bruise b1"></div>
       <div class="bruise b2"></div>
       <div class="bruise b3"></div>
-      <div class="pow" id="powText">POW!</div>
-      <div class="bubble" id="bubble"></div>
+      <div id="pow">POW!</div>
+      <div id="bubble"></div>
       <img src="toppng.com-classic-red-boxing-glove-png-600x384.png" id="glove">
     </div>
 
@@ -257,17 +246,17 @@ h1{
 <div id="kokina-layer"></div>
 
 <script>
-/* Sayaçlar */
+/* ===== Sayaçlar ===== */
 const meetDate=new Date("2023-12-22");
 const loveDate=new Date("2024-05-06");
 function calc(start){
-  const d=Math.floor((new Date()-start)/(1000*60*60*24));
+  const d=Math.floor((Date.now()-start)/(1000*60*60*24));
   return `${Math.floor(d/365)} yıl ${Math.floor((d%365)/30)} ay ${d%30} gün`;
 }
 meetCounter.innerText="💫 Tanışalı: "+calc(meetDate);
 loveCounter.innerText="💞 Sevgili olalı: "+calc(loveDate);
 
-/* Evet / Hayır */
+/* ===== Evet / Hayır ===== */
 let noCount=0;
 const hints=["Emin misin? 😏","Bir daha düşün 😌","Kaçış yok 😎"];
 noBtn.onclick=()=>{
@@ -284,7 +273,7 @@ yesBtn.onclick=()=>{
   document.body.appendChild(fs);
 };
 
-/* Kokina */
+/* ===== Kokina ===== */
 setInterval(()=>{
   const k=document.createElement("div");
   k.className="kokina";
@@ -293,7 +282,7 @@ setInterval(()=>{
   setTimeout(()=>k.remove(),8000);
 },300);
 
-/* Anılar */
+/* ===== Anılar ===== */
 const memories=[
   {src:"IMG-20241025-WA0032(1).jpg",text:"Bu fotoğrafta sana bir kez daha aşık oldum 💖"},
   {src:"IMG-20250730-WA0022.jpg",text:"En mutlu anılarımdan biri 🌸"},
@@ -308,7 +297,7 @@ memoryText.onclick=()=>{
 };
 memoryModal.onclick=()=>memoryModal.style.display="none";
 
-/* Video */
+/* ===== Video ===== */
 videoText.onclick=()=>{
   videoModal.style.display="flex";
   loveVideo.play().catch(()=>{});
@@ -319,15 +308,25 @@ videoModal.onclick=()=>{
   videoModal.style.display="none";
 };
 
-/* Şarkı */
+/* ===== Şarkı ===== */
 songText.onclick=()=>{
   if(loveSong.paused) loveSong.play().catch(()=>{});
   else loveSong.pause();
 };
 
-/* 🎮 Mini oyun */
+/* ===== Mini Oyun ===== */
+const gameOverlay=document.getElementById("gameOverlay");
+const faceWrap=document.getElementById("faceWrap");
+const glove=document.getElementById("glove");
+const pow=document.getElementById("pow");
+const bubble=document.getElementById("bubble");
+const punchSound=document.getElementById("punchSound");
+const hitsEl=document.getElementById("hits");
+const bruises=document.querySelectorAll(".bruise");
+
 let hits=0;
 const texts=["Yapma 😅","Hey!","Dur 😂","Tamam 🙈","Şaka 😄","POW!"];
+
 gameText.onclick=()=>gameOverlay.style.display="flex";
 closeGame.onclick=()=>gameOverlay.style.display="none";
 
@@ -335,29 +334,22 @@ faceWrap.addEventListener("click",e=>{
   hits++;
   hitsEl.innerText=hits;
 
-  const rect=faceWrap.getBoundingClientRect();
-  const x=e.clientX-rect.left;
-  const y=e.clientY-rect.top;
+  const r=faceWrap.getBoundingClientRect();
+  const x=e.clientX-r.left;
+  const y=e.clientY-r.top;
 
   glove.style.left=x+"px";
   glove.style.top=y+"px";
   glove.style.opacity=1;
   glove.style.transform="translate(-50%,-50%) scale(1)";
-  setTimeout(()=>{
-    glove.style.opacity=0;
-    glove.style.transform="scale(.5)";
-  },180);
+  setTimeout(()=>glove.style.opacity=0,180);
 
-  faceImg.style.transform="translateX(-6px)";
-  setTimeout(()=>faceImg.style.transform="translateX(6px)",40);
-  setTimeout(()=>faceImg.style.transform="translateX(0)",80);
+  pow.style.transform="translate(-50%,-50%) scale(1)";
+  setTimeout(()=>pow.style.transform="translate(-50%,-50%) scale(0)",120);
 
-  powText.style.transform="translate(-50%,-50%) scale(1)";
-  setTimeout(()=>powText.style.transform="translate(-50%,-50%) scale(0)",120);
-
-  if(hits>=3) document.querySelector(".b1").style.opacity=.7;
-  if(hits>=6) document.querySelector(".b2").style.opacity=.6;
-  if(hits>=9) document.querySelector(".b3").style.opacity=.5;
+  if(hits>=3) bruises[0].style.opacity=.7;
+  if(hits>=6) bruises[1].style.opacity=.6;
+  if(hits>=9) bruises[2].style.opacity=.5;
 
   bubble.innerText=texts[hits%texts.length];
   bubble.style.opacity=1;
