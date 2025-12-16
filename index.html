@@ -32,13 +32,11 @@ h1{
 .counter{
   font-size:1.1rem;
   opacity:.9;
-  margin-bottom:5px;
 }
 
-/* OYUN */
 .question{
   font-size:1.8rem;
-  margin:25px 0 10px;
+  margin:20px 0 10px;
 }
 
 .buttons{
@@ -60,7 +58,6 @@ h1{
 .yes{
   background:linear-gradient(45deg,#ff4d6d,#c60018);
   color:#fff;
-  box-shadow:0 0 15px rgba(255,0,60,.6);
 }
 
 .no{
@@ -70,101 +67,95 @@ h1{
 
 .hint{
   margin-top:15px;
-  font-size:1.2rem;
   min-height:30px;
 }
 
-/* YAZILAR */
-.memory-text{
-  margin-top:26px;
-  font-size:1.3rem;
-  cursor:pointer;
-  color:#ffd1dc;
-  text-decoration:underline;
-}
-
-.memory-text:hover{
-  color:#ff4d6d;
-}
-
-/* FOTO MODAL */
-#memoryModal{
+/* 🎮 OYUN */
+#gameOverlay{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.88);
-  display:none;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  z-index:100;
-  padding:20px;
-}
-
-#memoryModal img{
-  max-width:90%;
-  max-height:60%;
-  border-radius:20px;
-  box-shadow:0 0 30px rgba(255,0,80,.6);
-}
-
-#memoryCaption{
-  margin-top:15px;
-  font-size:1.4rem;
-}
-
-/* VIDEO MODAL */
-#videoModal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.9);
+  background:rgba(0,0,0,.85);
   display:none;
   justify-content:center;
   align-items:center;
-  z-index:150;
-  padding:20px;
+  z-index:300;
 }
 
-#videoModal video{
-  max-width:90%;
-  max-height:80%;
+.gameBox{
+  background:#1a0010;
   border-radius:20px;
-  box-shadow:0 0 30px rgba(255,0,80,.6);
-}
-
-/* FULLSCREEN EVET */
-.fullscreen{
-  position:fixed;
-  inset:0;
-  background:radial-gradient(circle,#ff4d6d,#7a0010);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:2.2rem;
+  padding:20px;
   text-align:center;
-  z-index:200;
+  box-shadow:0 0 40px rgba(255,0,80,.5);
+  position:relative;
+}
+
+.close{
+  position:absolute;
+  top:10px;
+  right:12px;
+  cursor:pointer;
+  font-size:22px;
+}
+
+.faceWrap{
+  position:relative;
+  width:220px;
+  height:220px;
+  margin:10px auto;
   cursor:pointer;
 }
 
-/* KOKINA */
-#kokina-layer{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:5;
-}
-
-.kokina{
-  position:absolute;
-  width:14px;
-  height:14px;
+#faceImg{
+  width:100%;
+  height:100%;
   border-radius:50%;
-  background:radial-gradient(circle at 30% 30%,#ff9aa8,#c60018 55%,#7a0010);
-  animation:fall 8s linear forwards;
+  object-fit:cover;
+  transition:transform .08s;
 }
 
-@keyframes fall{
-  from{transform:translateY(-40px);opacity:0;}
-  to{transform:translateY(110vh);opacity:1;}
+.bruise{
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  background:radial-gradient(circle at 40% 60%, rgba(120,0,255,.35), transparent 60%);
+  opacity:0;
+}
+.b2{background:radial-gradient(circle at 60% 40%, rgba(0,120,255,.35), transparent 60%);}
+.b3{background:radial-gradient(circle at 50% 50%, rgba(255,0,120,.35), transparent 60%);}
+
+.pow{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0);
+  font-size:28px;
+  color:#ffd166;
+  font-weight:bold;
+}
+
+.bubble{
+  position:absolute;
+  top:-20px;
+  left:50%;
+  transform:translateX(-50%) scale(0);
+  background:#fff;
+  color:#000;
+  padding:8px 12px;
+  border-radius:14px;
+  font-size:14px;
+  opacity:0;
+  pointer-events:none;
+}
+
+.bubble::after{
+  content:"";
+  position:absolute;
+  bottom:-6px;
+  left:50%;
+  transform:translateX(-50%);
+  border:6px solid transparent;
+  border-top-color:#fff;
 }
 </style>
 </head>
@@ -180,134 +171,104 @@ h1{
   <div class="question">Beni seviyor musun? 💘</div>
 
   <div class="buttons">
-    <button class="btn yes" id="yesBtn" onclick="yesClick()">Evet 💖</button>
-    <button class="btn no" id="noBtn" onclick="noClick()">Hayır 🙄</button>
+    <button class="btn yes" onclick="yesClick()">Evet 💖</button>
+    <button class="btn no" onclick="noClick()">Hayır 🙄</button>
   </div>
 
   <div class="hint" id="hint"></div>
 
-  <div class="memory-text" onclick="showMemory()">
-    Bir anı görmek ister misin? 💭
-  </div>
+  <button class="btn yes" onclick="openGame()">Mini Oyun 🎮</button>
+</div>
 
-  <div class="memory-text" onclick="showVideo()">
-    Bir videomuzu izlemek ister misin? 🎬💖
-  </div>
+<!-- 🎮 OYUN -->
+<div id="gameOverlay">
+  <div class="gameBox">
+    <div class="close" onclick="closeGame()">✖</div>
+    <h2>Hadi vur 😄</h2>
 
-  <div class="memory-text" id="songText" onclick="toggleSong()">
-    Bizim şarkıyı duymak ister misin? 🎵💖
+    <div class="faceWrap" onclick="punch()">
+      <img src="20251216_213013.jpg" id="faceImg">
+      <div class="bruise"></div>
+      <div class="bruise b2"></div>
+      <div class="bruise b3"></div>
+      <span class="pow">POW!</span>
+      <div class="bubble" id="bubble"></div>
+    </div>
+
+    <div>Vuruş: <span id="hits">0</span></div>
   </div>
 </div>
 
-<!-- FOTO MODAL -->
-<div id="memoryModal">
-  <img id="memoryImg">
-  <div id="memoryCaption"></div>
-</div>
-
-<!-- VIDEO MODAL -->
-<div id="videoModal">
-  <video id="loveVideo" controls>
-    <source src="VID_20251213_081534_509_bsl_V1.mp4" type="video/mp4">
-  </video>
-</div>
-
-<!-- ŞARKI -->
-<audio id="loveSong">
-  <source src="Çünkü sen, çölüme yağmur oldun. [pyLs2WFVh7Q] (mp3cut.net).mp3" type="audio/mpeg">
+<audio id="punchSound">
+  <source src="Punch Sound Effect. [lwYL2vs9HL4].mp3" type="audio/mpeg">
 </audio>
 
-<div id="kokina-layer"></div>
-
 <script>
-/* TARİHLER */
+/* Sayaçlar */
 const meetDate=new Date("2023-12-22");
 const loveDate=new Date("2024-05-06");
 
 function calc(start){
   const d=Math.floor((new Date()-start)/(1000*60*60*24));
-  return{y:Math.floor(d/365),m:Math.floor((d%365)/30),d:d%30};
+  return `${Math.floor(d/365)} yıl ${Math.floor((d%365)/30)} ay ${d%30} gün`;
 }
+meetCounter.innerText="💫 Tanışalı: "+calc(meetDate);
+loveCounter.innerText="💞 Sevgili olalı: "+calc(loveDate);
 
-function updateCounters(){
-  const m=calc(meetDate),l=calc(loveDate);
-  meetCounter.innerText=`💫 ${m.y} yıl ${m.m} ay ${m.d} gündür tanışıyoruz`;
-  loveCounter.innerText=`💞 ${l.y} yıl ${l.m} ay ${l.d} gündür sevgiliyiz`;
-}
-updateCounters();
-
-/* OYUN */
+/* Sevgi oyunu */
 let noCount=0;
-const hints=["Emin misin? 😏","Bir daha düşün 😌","Kalbin evet diyor 💖","Hayır küçülüyor 😅","Kaçış yok 😎"];
-
 function noClick(){
   noCount++;
-  yesBtn.style.transform=`scale(${1+noCount*.25})`;
-  noBtn.style.transform=`scale(${1-noCount*.15})`;
-  hint.innerText=hints[Math.min(noCount-1,hints.length-1)];
-  if(noCount>=5){
-    noBtn.style.display="none";
-    yesBtn.style.transform="scale(4)";
-  }
+  hint.innerText=["Emin misin? 😏","Bir daha düşün 😌","Kaçış yok 😎"][noCount%3];
 }
-
 function yesClick(){
-  const fs=document.createElement("div");
-  fs.className="fullscreen";
-  fs.innerText="Beni sevdiğini zaten biliyordum 💖😌";
-  document.body.appendChild(fs);
+  alert("Bunu biliyordum 💖😌");
 }
 
-/* ANILAR */
-const memories=[
-  {src:"IMG-20250730-WA0022.jpg",text:"Bu fotoğrafta sana bir kez daha aşık oldum 💖"},
-  {src:"IMG-20241025-WA0032(1).jpg",text:"En mutlu anılarımdan biri 🌸"},
-  {src:"IMG-20250122-WA0100(1).jpg",text:"O bakışı her an hissetmek istiyorum 💘"}
-];
-let memIndex=0;
+/* 🎮 Mini oyun */
+let hits=0;
+const texts=["Yapma 😅","Hey!","Dur 😂","Tamam tamam 🙈","Şaka şaka 😄","POW!"];
 
-function showMemory(){
-  memoryImg.src=memories[memIndex].src;
-  memoryCaption.innerText=memories[memIndex].text;
-  memoryModal.style.display="flex";
-  memIndex=(memIndex+1)%memories.length;
+function openGame(){
+  gameOverlay.style.display="flex";
 }
-memoryModal.addEventListener("click",()=>memoryModal.style.display="none");
-
-/* VIDEO */
-function showVideo(){
-  videoModal.style.display="flex";
-  loveVideo.play();
-}
-videoModal.addEventListener("click",()=>{
-  loveVideo.pause();
-  loveVideo.currentTime=0;
-  videoModal.style.display="none";
-});
-
-/* 🎵 ŞARKI – BAŞLAT / DURDUR */
-const song = document.getElementById("loveSong");
-const songText = document.getElementById("songText");
-
-function toggleSong(){
-  if(song.paused){
-    song.play();
-    songText.innerText="Şarkıyı durdur ⏸️";
-  }else{
-    song.pause();
-    songText.innerText="Devam et ▶️";
-  }
+function closeGame(){
+  gameOverlay.style.display="none";
 }
 
-/* KOKINA */
-function spawnKokina(){
-  const k=document.createElement("div");
-  k.className="kokina";
-  k.style.left=Math.random()*window.innerWidth+"px";
-  document.getElementById("kokina-layer").appendChild(k);
-  setTimeout(()=>k.remove(),8000);
+function punch(){
+  hits++;
+  hitsEl=document.getElementById("hits");
+  hitsEl.innerText=hits;
+
+  const face=faceImg;
+  const pow=document.querySelector(".pow");
+  const bruises=document.querySelectorAll(".bruise");
+  const bubble=document.getElementById("bubble");
+  const sound=document.getElementById("punchSound");
+
+  face.style.transform="translateX(-6px)";
+  setTimeout(()=>face.style.transform="translateX(6px)",40);
+  setTimeout(()=>face.style.transform="translateX(0)",80);
+
+  pow.style.transform="translate(-50%,-50%) scale(1)";
+  setTimeout(()=>pow.style.transform="translate(-50%,-50%) scale(0)",120);
+
+  if(hits>=3) bruises[0].style.opacity=.6;
+  if(hits>=6) bruises[1].style.opacity=.6;
+  if(hits>=9) bruises[2].style.opacity=.6;
+
+  bubble.innerText=texts[hits%texts.length];
+  bubble.style.opacity=1;
+  bubble.style.transform="translateX(-50%) scale(1)";
+  setTimeout(()=>{
+    bubble.style.opacity=0;
+    bubble.style.transform="translateX(-50%) scale(0)";
+  },700);
+
+  sound.currentTime=0;
+  sound.play();
 }
-setInterval(spawnKokina,300);
 </script>
 
 </body>
